@@ -2,7 +2,7 @@ import { API_KEY, API_URL } from './constants';
 import axios from 'axios';
 axios.defaults.baseURL = `${API_URL}`;
 
-export const fetchContent = async req => {
+export const getContent = async req => {
     const response = await axios.get(`?key=${API_KEY}&q=${req}&image_type=photo`);
     return response.data;
 

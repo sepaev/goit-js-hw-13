@@ -22,12 +22,17 @@ $input-radius: '5px';
     width: calc(var(--input-width) + var(--border) * 2);
     color: #1c1c26;
     padding: 0 10px;
+
+    @media (max-width: 780px) {
+      width: calc(var(--input-width) / 2 + var(--border) * 2);
+      font-size: 14px;
+    }
   }
 
   & button {
     border-radius: 0 var(--input-radius) var(--input-radius) 0;
     position: absolute;
-    left: calc(50vw + (var(--input-width) / 2) - var(--btn-width));
+    left: calc(50vw + (var(--input-width) / 2) - var(--btn-width) - var(--border));
     top: calc(var(--btn-width) / 2 + var(--border));
     width: var(--btn-width);
     height: var(--btn-width);
@@ -38,5 +43,9 @@ $input-radius: '5px';
     background-repeat: no-repeat;
     background-size: calc(var(--btn-width) / 2);
     background-position: center;
+
+    @media (max-width: 780px) {
+      left: calc(50vw + (var(--input-width) / 4) - var(--btn-width) - var(--border));
+    }
   }
 }
