@@ -1,0 +1,42 @@
+:root {
+  --input-radius: 5px;
+  --btn-width: 40px;
+
+  --input-width: calc(var(--btn-width) * 10);
+  --border: 2px;
+}
+$input-radius: '5px';
+
+.search-form {
+  width: 100%;
+  height: calc(var(--btn-width) * 2);
+  background-color: #3f56b3;
+  text-align: center;
+  padding: calc(var(--btn-width) / 2);
+
+  & input {
+    border-radius: var(--input-radius);
+    border: var(--border) solid #a2c8fb;
+    height: calc(var(--btn-width) + var(--border) * 2);
+    font-size: 20px;
+    width: calc(var(--input-width) + var(--border) * 2);
+    color: #1c1c26;
+    padding: 0 10px;
+  }
+
+  & button {
+    border-radius: 0 var(--input-radius) var(--input-radius) 0;
+    position: absolute;
+    left: calc(50vw + (var(--input-width) / 2) - var(--btn-width));
+    top: calc(var(--btn-width) / 2 + var(--border));
+    width: var(--btn-width);
+    height: var(--btn-width);
+    border: 1px solid transparent;
+    background-color: #f0f0f0;
+    background-image: url(../images/search.svg);
+    color: black;
+    background-repeat: no-repeat;
+    background-size: calc(var(--btn-width) / 2);
+    background-position: center;
+  }
+}
