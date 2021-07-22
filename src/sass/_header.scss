@@ -1,18 +1,11 @@
-:root {
-  --input-radius: 5px;
-  --btn-width: 40px;
-
-  --input-width: calc(var(--btn-width) * 10);
-  --border: 2px;
-}
-$input-radius: '5px';
-
 .search-form {
   width: 100%;
   height: calc(var(--btn-width) * 2);
   background-color: #3f56b3;
   text-align: center;
   padding: calc(var(--btn-width) / 2);
+  position: fixed;
+  top: 0;
 
   & input {
     border-radius: var(--input-radius);

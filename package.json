@@ -29,6 +29,7 @@
   "dependencies": {
     "axios": "^0.21.1",
     "json-server": "^0.16.3",
+    "modern-normalize": "^1.1.0",
     "notiflix": "^3.0.1"
   }
 }

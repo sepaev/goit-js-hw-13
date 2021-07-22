@@ -1,0 +1,13 @@
+:root {
+  // header
+  --input-radius: 5px;
+  --btn-width: 40px;
+  --input-width: calc(var(--btn-width) * 10);
+  --border: 2px;
+  // grid
+  --standart-30px: 30px;
+}
+
+li {
+  list-style-type: none;
+}

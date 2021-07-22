@@ -1,0 +1,33 @@
+
+* {
+  outline: solid red 1px;
+}
+
+.gallery {
+  padding: var(--standart-30px);
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: calc(-1 * var(--standart-30px));
+  margin-top: calc(-1 * var(--standart-30px));
+}
+
+.image-card {
+  flex-basis: calc(100% / 4 - var(--standart-30px));
+  margin-left: var(--standart-30px);
+  margin-top: var(--standart-30px);
+
+  &__image {
+    width: 100%;
+    // height: 66%;
+  }
+
+  &__info {
+    display: flex;
+    justify-content: space-between;
+    margin: auto;
+  }
+  
+  &__info li {
+    padding: 5px;
+  }
+}

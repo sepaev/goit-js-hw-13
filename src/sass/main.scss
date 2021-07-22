@@ -4,4 +4,7 @@
  */
 
 // Стили для файла с примером HTML-фрагмента
+@import '../../node_modules/modern-normalize/modern-normalize.css';
+@import './common';
 @import './header';
+@import './grid';
