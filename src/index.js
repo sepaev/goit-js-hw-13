@@ -3,54 +3,63 @@ import Notiflix from "notiflix";
 import { getRefs } from './js/refs'
 import { HREF } from './js/constants'
 import { createUrlForRequest, writeInnerHTML } from './js/buildHtml'
-import { putContent } from './js/putContent';
+import { takeContent } from './js/takeContent';
 import { debounce } from "debounce";
 
+let current = '', page = 1, pageHeight = document.documentElement.scrollHeight;
 const refs = getRefs();
-let CURRENT = '';
-let PAGE = 1;
-let pageHeight = document.documentElement.scrollHeight;
 
+if (HREF[1]) {
+    window.scrollTo(1, 1);
+    refs.searchBox.value = HREF[2];
+    takeContent(HREF[1], page, refs.gallerySection);
+    current = HREF[1];
+}
 refs.searchButton.addEventListener('click', e => {
     e.preventDefault();
     
-    writeInnerHTML(refs.gallerySection, '');
-    CURRENT = createUrlForRequest(refs.searchBox.value);
-    history.pushState(null, null, HREF + "?searchQuery=" + CURRENT);
-    putContent(CURRENT, PAGE, refs.gallerySection);
+    refresh();
+    current = createUrlForRequest(refs.searchBox.value);
+    history.pushState(null, null, HREF[0] + "?searchQuery=" + current);
+    takeContent(current, page, refs.gallerySection);
 });
 
 refs.searchBox.addEventListener('input', () => {
-    if (CURRENT) {
+    if (current) {
         let urlRequest = createUrlForRequest(refs.searchBox.value);
-        if (urlRequest < CURRENT) {
-            CURRENT = '';
-            PAGE = 1;
-            writeInnerHTML(refs.gallerySection, '');
+        if (urlRequest < current) {
+            refresh();
         }
     }
+    if (!refs.searchBox.value) history.pushState(null, null, HREF[0]);
 })
 
 window.addEventListener('scroll', debounce(() => {
     const currentPosition = window.scrollY + document.documentElement.clientHeight;
-    // if (PAGE === 1) pageHeight = document.documentElement.scrollHeight;
-    pageHeight = document.documentElement.scrollHeight / PAGE;
-    const index = pageHeight * PAGE - currentPosition - 100;
+    pageHeight = document.documentElement.scrollHeight / page;
+    const index = pageHeight * page - currentPosition;
 
-    if (index < 500 && pageHeight > 2000) {
+    if (index < 600 && pageHeight > 2000) {
 
-        if (PAGE < 13) {
-            console.log('page '+ PAGE);
-            console.log(index);
-            PAGE++;
-            putContent(CURRENT, PAGE, refs.gallerySection);
+        if (page < 13) {
+            page++;
+            takeContent(current, page, refs.gallerySection);
         } else {
             debounce(Notiflix.Notify.warning("We're sorry, but you've reached the end of search results."), 3000);
         }
     }
-    setTimeout(() => {
-        if (currentPosition >= document.documentElement.scrollHeight-1) {
-            Notiflix.Notify.warning("We're sorry, but you've reached the end of search results.");
-        }
-    } , 500)
+    if (refs.gallerySection.innerHTML) {
+        setTimeout(() => {
+            if (currentPosition >= document.documentElement.scrollHeight - 1) {
+                Notiflix.Notify.warning("We're sorry, but you've reached the end of search results.");
+            }
+        }, 500)
+    }
 }), 300);
+
+const refresh = () => {
+    current = '';
+    page = 1;
+    writeInnerHTML(refs.gallerySection, '');
+    pageHeight = document.documentElement.scrollHeight;
+};

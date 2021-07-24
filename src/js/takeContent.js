@@ -2,7 +2,7 @@ import { getContent } from './getContent'
 import { buildHtml } from './buildHtml'
 import Notiflix from "notiflix";
 
-export const putContent = (current, page, tag) => {
+export const takeContent = (current, page, tag) => {
    Notiflix.Loading.circle();
    getContent(current, page)
        .then(pictures => {
