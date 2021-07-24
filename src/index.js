@@ -9,7 +9,7 @@ import { debounce } from "debounce";
 const refs = getRefs();
 let CURRENT = '';
 let PAGE = 1;
-let documentHeight = document.documentElement.scrollHeight;
+let pageHeight = document.documentElement.scrollHeight;
 
 refs.searchButton.addEventListener('click', e => {
     e.preventDefault();
@@ -33,18 +33,24 @@ refs.searchBox.addEventListener('input', () => {
 
 window.addEventListener('scroll', debounce(() => {
     const currentPosition = window.scrollY + document.documentElement.clientHeight;
-    if (PAGE === 1) documentHeight = document.documentElement.scrollHeight;
-    const index = documentHeight * PAGE - currentPosition;
+    // if (PAGE === 1) pageHeight = document.documentElement.scrollHeight;
+    pageHeight = document.documentElement.scrollHeight / PAGE;
+    const index = pageHeight * PAGE - currentPosition - 100;
 
-    if (index <= 400 && documentHeight > 2000) {
-        console.log(documentHeight);
-        console.log(documentHeight * PAGE - currentPosition);
-        PAGE++;
-        putContent(CURRENT, PAGE, refs.gallerySection);
+    if (index < 500 && pageHeight > 2000) {
+
+        if (PAGE < 13) {
+            console.log('page '+ PAGE);
+            console.log(index);
+            PAGE++;
+            putContent(CURRENT, PAGE, refs.gallerySection);
+        } else {
+            debounce(Notiflix.Notify.warning("We're sorry, but you've reached the end of search results."), 3000);
+        }
     }
     setTimeout(() => {
-        if (currentPosition === document.documentElement.scrollHeight) {
+        if (currentPosition >= document.documentElement.scrollHeight-1) {
             Notiflix.Notify.warning("We're sorry, but you've reached the end of search results.");
         }
-    } , 200)
-}), 200);
+    } , 500)
+}), 300);

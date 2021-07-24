@@ -17,7 +17,6 @@ export const getContent = async (req, page) => {
     axios.defaults.baseURL = `${API_URL}`;
     try {
         const response = await axios.get(getStringOptions(OPTIONS));
-        if (OPTIONS.page > 1 ) console.dir(response.data);
         return response.data;
     } catch(error) {
         console.log(error);;
