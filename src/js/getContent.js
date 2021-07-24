@@ -5,7 +5,7 @@ export let OPTIONS = {
     q: '',
     image_type: 'photo',
     orientation: 'horizontal',
-    safesearch: 'false',  //перед сдачей поменять
+    safesearch: 'true',
     per_page: 40,
     page: 1,
 }
