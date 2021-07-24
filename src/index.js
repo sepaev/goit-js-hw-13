@@ -18,12 +18,16 @@ if (HREF[1]) {
     current = HREF[1];
     history.pushState(null, null, HREF[0] + "?searchQuery=" + current);
 }
+
 refs.searchButton.addEventListener('click', e => {
     e.preventDefault();
     
     refresh();
     current = createUrlForRequest(refs.searchBox.value).trim();
-    if (!current) refresh();
+    if (!current) {
+        refresh();
+        return;
+    };
     history.pushState(null, null, HREF[0] + "?searchQuery=" + current);
     getAndInsertContent(current, page, refs.gallerySection).then( () => gallery = new SimpleLightbox('.image-card a'));
 });
@@ -41,12 +45,9 @@ refs.searchBox.addEventListener('input', () => {
 refs.gallerySection.addEventListener('click', e => {
     e.preventDefault();
     if (e.target.nodeName === 'IMG') {
-        
         gallery.on('show.simplelightbox', () => {});
     };
 })
-
-
 
 window.addEventListener('scroll', debounce(() => {
     const currentPosition = window.scrollY + document.documentElement.clientHeight;
