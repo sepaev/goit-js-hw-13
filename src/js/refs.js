@@ -3,6 +3,6 @@ export const getRefs = () => {
     searchBox: document.querySelector('input'),
     searchButton: document.querySelector('button'),
     gallerySection: document.querySelector('.gallery'),
-    body: document.querySelector('body'),
+    nextBtn: document.querySelector('.sl-next'),
   };
 };

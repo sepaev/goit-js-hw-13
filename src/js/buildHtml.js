@@ -12,6 +12,7 @@ export const buildHtml = (response, page, target) => {
             writeInnerHTML(target, createTextHTML(response.hits));
         }
     }
+    return response;
 }
 
 const createTextHTML = (obj) => {
