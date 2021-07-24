@@ -7,15 +7,21 @@ export let OPTIONS = {
     orientation: 'horizontal',
     safesearch: 'false',  //перед сдачей поменять
     per_page: 40,
-    page: 2,
+    page: 1,
 }
 
-export const getContent = async req => {
+export const getContent = async (req, page) => {
     if (!req) return '';
     OPTIONS.q = req;
+    OPTIONS.page = page;
     axios.defaults.baseURL = `${API_URL}`;
-    const response = await axios.get(getStringOptions(OPTIONS));
-    return response.data;
+    try {
+        const response = await axios.get(getStringOptions(OPTIONS));
+        if (OPTIONS.page > 1 ) console.dir(response.data);
+        return response.data;
+    } catch(error) {
+        console.log(error);;
+    }
 
 }
 

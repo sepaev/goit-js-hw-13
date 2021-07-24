@@ -1,16 +1,16 @@
 import Notiflix from "notiflix";
 import imgGrid from '../templates/imgGrid.hbs';
 
-export const buildHtml = (response, target) => {
+export const buildHtml = (response, page, target) => {
     const total = response.totalHits
     if (total === 0) {
         Notiflix.Notify.failure('Sorry, there are no images matching your search query. Please try again.');
         writeInnerHTML(target, '');
-        return [];
     } else {
-        console.dir(response);
-        Notiflix.Notify.success(`Hooray! We found ${total} images.`);
-        writeInnerHTML(target, createTextHTML(response.hits))
+        if (page === 1) Notiflix.Notify.success(`Hooray! We found ${total} images.`);
+        if (response.hits.length > 0) {
+            writeInnerHTML(target, createTextHTML(response.hits));
+        }
     }
 }
 
@@ -27,7 +27,13 @@ const createTextHTML = (obj) => {
 }
 
 export const writeInnerHTML = (obj, html) => {
-    obj.innerHTML = html;
+    if (html) {
+        obj.innerHTML += html;
+        // console.log('added');
+    } else {
+        obj.innerHTML = html
+        // console.log('cleared');
+    }
 }
 
 export const createUrlForRequest = (text) => {
