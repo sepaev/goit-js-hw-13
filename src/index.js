@@ -10,7 +10,8 @@ import SimpleLightbox from "simplelightbox";
 let current = '', page = 1, pageHeight = document.documentElement.scrollHeight;
 let gallery;
 const refs = getRefs();
-
+refs.searchBox.focus();
+ 
 if (HREF[1]) {
     window.scrollTo(1, 1);
     refs.searchBox.value = HREF[2];

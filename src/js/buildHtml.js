@@ -30,10 +30,8 @@ const createTextHTML = (obj) => {
 export const writeInnerHTML = (obj, html) => {
     if (html) {
         obj.innerHTML += html;
-        // console.log('added');
     } else {
         obj.innerHTML = html
-        // console.log('cleared');
     }
 }
 
