@@ -7,7 +7,7 @@ import { getAndInsertContent } from './js/getAndInsertContent';
 import { debounce } from "debounce";
 import SimpleLightbox from "simplelightbox";
 
-let current = '', page = 1, pageHeight = document.documentElement.scrollHeight;
+let current = '', oldPosition = 0, page = 1, pageHeight = document.documentElement.scrollHeight;
 let gallery;
 const refs = getRefs();
 refs.searchBox.focus();
@@ -52,18 +52,20 @@ refs.gallerySection.addEventListener('click', e => {
 
 window.addEventListener('scroll', debounce(() => {
     const currentPosition = window.scrollY + document.documentElement.clientHeight;
-    pageHeight = document.documentElement.scrollHeight / page;
-    const index = pageHeight * page - currentPosition;
+    if (currentPosition - oldPosition > 0) {
+        pageHeight = document.documentElement.scrollHeight / page;
 
-    if (index < 600 && pageHeight > 2000) {
-
-        if (page < 13) {
-            page++;
-            getAndInsertContent(current, page, refs.gallerySection).then(() => gallery.refresh());
-        } else {
-            debounce(Notiflix.Notify.warning("We're sorry, but you've reached the end of search results."), 3000);
+        if ( (pageHeight * page - currentPosition) < 600 && pageHeight > 2000) {
+            if (page < 13) {
+                page++;
+                getAndInsertContent(current, page, refs.gallerySection).then(() => gallery.refresh());
+            } else {
+                debounce(Notiflix.Notify.warning("We're sorry, but you've reached the end of search results."), 3000);
+            }
         }
     }
+    oldPosition = currentPosition;
+
     if (refs.gallerySection.innerHTML) {
         setTimeout(() => {
             if (currentPosition >= document.documentElement.scrollHeight - 1) {
